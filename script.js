@@ -1,6 +1,9 @@
 // Superfluous comments are here so I can come back to this and understand what I did & 
 // the thought process behind those decisions.
 
+
+// Lines 7 through 38 create the first grid that loads in when the user opens the page.
+
 const container = document.querySelector('.container') // Creates a variable corresponding to the first 'container' class div in the document the .js file is attached to.
 
 for(let i = 0; i < 16; i++) { // While i is less than 16 (starting from zero), adding 1 after each loop...
@@ -16,7 +19,7 @@ rows.forEach(row => { // For every row in the rows NodeList...
     for(let i = 0; i < 16; i++) { //While i is less than 16 (starting from zero), adding 1 after each loop...
         let col = document.createElement('div'); // Create a div, assign it to the variable 'col'...
         col.classList.add('col'); // Add the class 'col' to every col div...
-        col.style.opacity = 0.0;
+        col.style.opacity = 1;
         row.appendChild(col); // Add that col to the row div we're currently on...
     } // Do this 16 times per row to create 16 cells in the row.
 });
@@ -25,20 +28,31 @@ let cells = document.querySelectorAll('.col'); // Create a NodeList of each elem
 
 cells.forEach(element => { // For every element in the 'cells' NodeList...
     element.addEventListener('mouseenter', function(e) { // Add an event listener that listens for a mouse entering the element...
-        element.style.backgroundColor = randomColor();    // Change the color of that element when mouse the mouse enters the div.
-        if(element.style.opacity < 1) {
-            this.style.opacity = parseFloat(this.style.opacity) + 0.1;
-        } else {
+        if(rainbow.checked) {
+                element.style.backgroundColor = randomColor();    // Change the color of that element when mouse the mouse enters the div.
+            } else {
+                element.style.backgroundColor = 'black';
+            }
+        if(opacity.checked) {        
+            if(element.style.opacity < 1) {
+                this.style.opacity = parseFloat(this.style.opacity) + 0.1;
+            } else {
             element.style.opacity = 0.1;
+        }} else if (!opacity.checked) {
+            this.style.opacity = 1;
         }
     }
 )});
 
-const resize = document.querySelector('.resize');
+const opacity = document.querySelector('#opacity'); //Creates a variable for the gradient mode box.
 
-const clear = document.querySelector('.clear');
+const rainbow = document.querySelector('#rainbow');
 
-function rowResize(num) { // A copy of the initial for loop that creates rows.
+const resize = document.querySelector('.resize'); // Creates a variable for the resize button.
+
+const clear = document.querySelector('.clear'); // Creates a variable for the clear button.
+
+function rowResize(num) { // A copy of the initial for loop that creates rows. Used in resize function.
     for(let i = 0; i < num; i++) {
         let row = document.createElement('div');
         row.classList.add('row');
@@ -46,12 +60,13 @@ function rowResize(num) { // A copy of the initial for loop that creates rows.
     }
 }
 
-function colResize(rows, num) {
+function colResize(rows, num) { // A copy of the initial for loop that creates columns/cells. Used in resize function.
     rows.forEach(row => {
         for(let i = 0; i < num; i++) {
             console.log('running...')
             let col = document.createElement('div');
             col.classList.add('col');
+            col.style.opacity = 1;
             row.appendChild(col);
         }
     });
@@ -64,10 +79,20 @@ function randomColor() {
 function reattach(newCells) {
     newCells.forEach(element => { // For every element in the 'cells' NodeList...
         element.addEventListener('mouseenter', function(e) { // Add an event listener that listens for a mouse entering the element...
-            element.style.backgroundColor = randomColor();    // Change the color of that element when mouse the mouse enters the div.
-        }
-    )});
-}
+            if(rainbow.checked) {
+                element.style.backgroundColor = randomColor();    // Change the color of that element when mouse the mouse enters the div.
+            } else {
+                element.style.backgroundColor = 'black';
+            }            
+            if(opacity.checked) {        
+                if(element.style.opacity < 1) {
+                    this.style.opacity = parseFloat(this.style.opacity) + 0.1;
+                } else {
+                element.style.opacity = 0.1;
+            }} else if (!opacity.checked) {
+                this.style.opacity = 1;
+            }}
+    )})};
 
 resize.addEventListener('click', function(e) {
     let amount = window.prompt('Please enter an amount to resize by: ');
@@ -96,4 +121,4 @@ clear.addEventListener('click', function(e) {
     colResize(rows, count);
     newCells = document.querySelectorAll('.col');
     reattach(newCells);
-})
+});
