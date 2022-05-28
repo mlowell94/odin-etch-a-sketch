@@ -16,6 +16,7 @@ rows.forEach(row => { // For every row in the rows NodeList...
     for(let i = 0; i < 16; i++) { //While i is less than 16 (starting from zero), adding 1 after each loop...
         let col = document.createElement('div'); // Create a div, assign it to the variable 'col'...
         col.classList.add('col'); // Add the class 'col' to every col div...
+        col.style.opacity = 0.0;
         row.appendChild(col); // Add that col to the row div we're currently on...
     } // Do this 16 times per row to create 16 cells in the row.
 });
@@ -24,11 +25,18 @@ let cells = document.querySelectorAll('.col'); // Create a NodeList of each elem
 
 cells.forEach(element => { // For every element in the 'cells' NodeList...
     element.addEventListener('mouseenter', function(e) { // Add an event listener that listens for a mouse entering the element...
-        element.style.backgroundColor = 'black';    // Change the color of that element when mouse the mouse enters the div.
+        element.style.backgroundColor = randomColor();    // Change the color of that element when mouse the mouse enters the div.
+        if(element.style.opacity < 1) {
+            this.style.opacity = parseFloat(this.style.opacity) + 0.1;
+        } else {
+            element.style.opacity = 0.1;
+        }
     }
 )});
 
-const resize = document.querySelector('.resize')
+const resize = document.querySelector('.resize');
+
+const clear = document.querySelector('.clear');
 
 function rowResize(num) { // A copy of the initial for loop that creates rows.
     for(let i = 0; i < num; i++) {
@@ -49,10 +57,14 @@ function colResize(rows, num) {
     });
 }
 
+function randomColor() {
+    return ('#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6));
+}
+
 function reattach(newCells) {
     newCells.forEach(element => { // For every element in the 'cells' NodeList...
         element.addEventListener('mouseenter', function(e) { // Add an event listener that listens for a mouse entering the element...
-            element.style.backgroundColor = 'black';    // Change the color of that element when mouse the mouse enters the div.
+            element.style.backgroundColor = randomColor();    // Change the color of that element when mouse the mouse enters the div.
         }
     )});
 }
@@ -72,3 +84,16 @@ resize.addEventListener('click', function(e) {
         alert("Error: Canvas can only resize by a number between 1 and 100!")
     }
 });
+
+clear.addEventListener('click', function(e) {
+    let count = 0;
+    while(container.hasChildNodes()) {
+        container.removeChild(container.lastChild);
+        count += 1;
+    }
+    rowResize(count);
+    rows = document.querySelectorAll('.container > div');
+    colResize(rows, count);
+    newCells = document.querySelectorAll('.col');
+    reattach(newCells);
+})
