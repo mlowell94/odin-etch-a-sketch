@@ -10,7 +10,7 @@ for(let i = 0; i < 16; i++) { // While i is less than 16 (starting from zero), a
 } // Do this 16 times to create 16 rows.
 
 
-const rows = document.querySelectorAll('.container > div'); // Create a NodeList of all items of class 'row'
+let rows = document.querySelectorAll('.container > div'); // Create a NodeList of all items of class 'row'
 
 rows.forEach(row => { // For every row in the rows NodeList...
     for(let i = 0; i < 16; i++) { //While i is less than 16 (starting from zero), adding 1 after each loop...
@@ -20,7 +20,7 @@ rows.forEach(row => { // For every row in the rows NodeList...
     } // Do this 16 times per row to create 16 cells in the row.
 });
 
-const cells = document.querySelectorAll('.col'); // Create a NodeList of each element with the tag 'col'.
+let cells = document.querySelectorAll('.col'); // Create a NodeList of each element with the tag 'col'.
 
 cells.forEach(element => { // For every element in the 'cells' NodeList...
     element.addEventListener('mouseenter', function(e) { // Add an event listener that listens for a mouse entering the element...
@@ -38,14 +38,36 @@ function rowResize(num) { // A copy of the initial for loop that creates rows.
     }
 }
 
+function colResize(rows, num) {
+    rows.forEach(row => {
+        for(let i = 0; i < num; i++) {
+            console.log('running...')
+            let col = document.createElement('div');
+            col.classList.add('col');
+            row.appendChild(col);
+        }
+    });
+}
+
+function reattach(newCells) {
+    newCells.forEach(element => { // For every element in the 'cells' NodeList...
+        element.addEventListener('mouseenter', function(e) { // Add an event listener that listens for a mouse entering the element...
+            element.style.backgroundColor = 'black';    // Change the color of that element when mouse the mouse enters the div.
+        }
+    )});
+}
+
 resize.addEventListener('click', function(e) {
     let amount = window.prompt('Please enter an amount to resize by: ');
     if(typeof(parseInt(amount)) == typeof(1) && amount > 0 && amount <= 100) {
-        console.log('if statement running...')
         while(container.hasChildNodes()) {
-            console.log('while loop running');
             container.removeChild(container.lastChild);
-        };
+        }
+        rowResize(amount);
+        rows = document.querySelectorAll('.container > div');
+        colResize(rows, amount);
+        newCells = document.querySelectorAll('.col');
+        reattach(newCells);
     } else {
         alert("Error: Canvas can only resize by a number between 1 and 100!")
     }
