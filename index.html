@@ -6,17 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
-    <title>sketch and etch :)</title>
+    <title>bitmaker v1.0</title>
 </head>
 <body>
-    <div class="container"></div>
+    <div class="wrapper">
+        <h1 style="text-align: center;">bitmaker</h1>
+    <div class="container">
+    </div>
+    </div>
     <div class="right-side">
-        <button class="resize">Resize Canvas</button>
-        <button class="clear">Clear</button>
-        <input type="checkbox" id="opacity">
-        <label for="opacity">Gradient Mode</label>
-        <input type="checkbox" id="rainbow">
-        <label for="rainbow">Rainbow Mode</label>
+        <div class="color-selector">
+            <input type="color" id="choice" value="#000000">
+            <label for="choice">color</label>
+        </div>
+        <div class="inputter">
+            <input type="checkbox" id="opacity"> gradient mode
+            <label for="opacity"><img src="uncheck.png" class="icon"></label>
+        </div>
+        <div class="inputter">
+            <input type="checkbox" id="rainbow"> <span style="color: red;">g</span><span style="color: orange">a</span><span style="color: green;">m</span><span style="color: blue;">e</span><span style="color: indigo;">r</span> mode
+            <label for="rainbow"><img src="uncheck.png" class="icon"></label>
+        </div>
+        <div class="inputter">
+            <input type="checkbox" id="gridlines" checked="true"> toggle gridlines
+            <label for="gridlines"><img src="uncheck.png" class="icon"></label>
+        </div>
+        <div class="inputter">
+            <input type="checkbox" id="eraser"> eraser
+            <label for="eraser"><img src="uncheck.png" class="icon"></label>
+        </div>
+        <button class="resize">resize canvas</button>
+        <button class="clear">clear</button>
     </div>
 </body>
 </html>
