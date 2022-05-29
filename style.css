@@ -98,15 +98,17 @@ button {
 
 .icon {
     width: 35px;
-    position: absolute;
+    position: relative;
     border: solid black 1px;
-    left: 67%;
+    left: -105%;
+    margin-bottom: -10px;
 }
 
 input:checked ~ label{
     content:url("check.png");
     width: 35px;
-    position: absolute;
+    position: relative;
     border: solid black 1px;
-    left: 67%;
+    left: -105%;
+    margin-bottom: -10px;
 }
