@@ -112,3 +112,40 @@ input:checked ~ label{
     left: -105%;
     margin-bottom: -10px;
 }
+
+@media screen and (max-width: 1000px) {
+    body {
+        margin: 0;
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: space-around;
+        background-color: #deeef9;
+        font-family: "custom";
+        flex-wrap: wrap;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 328px;
+        height: 356px;
+        margin-bottom: 12px;
+        align-self: center;
+        margin-right: 10px;
+    }
+
+    .right-side {
+        display: flex;
+        min-width: 328px;
+        min-height: 39%;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
+        border: #d1dbff inset 10px;
+        font-size: 24px;
+        margin-right: 10px;
+        box-shadow: 3px 2px 10px;
+  }
+}
